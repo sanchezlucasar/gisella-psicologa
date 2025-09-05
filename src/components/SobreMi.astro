@@ -1,0 +1,76 @@
+<section
+    id="sobremi"
+    class="py-20 bg-[var(--primary-50)] relative overflow-hidden"
+>
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+        <!-- Texto -->
+        <div class="space-y-5 reveal">
+            <h2 class="text-3xl font-bold">
+                Sobre <span class="text-[var(--primary-700)]">mí</span>
+            </h2>
+            <p class="text-slate-700 leading-relaxed">
+                Soy <strong>Psicóloga Clínica</strong> con atención online para jóvenes
+                y adultos. Formación de grado, especializaciones en <strong
+                    >psicoanálisis</strong
+                > y acompañamiento terapéutico. Participo en seminarios, ateneos
+                clínicos, superviso y realizo análisis personal.
+            </p>
+            <p class="text-slate-700 leading-relaxed">
+                Integro equipos interdisciplinarios en salud mental,
+                discapacidad e investigación científica. Disfruto crear
+                oportunidades de crecimiento con otras personas y articular
+                herramientas de <em>diseño, tecnología y comunicación</em>
+                para mejorar la accesibilidad y el cuidado.
+            </p>
+
+            <!-- Puntos destacados -->
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                {
+                    [
+                        "Atención online y confidencial",
+                        "Enfoque psicoanalítico",
+                        "Supervisión y trabajo en red",
+                        "Investigación y escritura",
+                    ].map((item) => (
+                        <div class="px-4 py-2 rounded-xl bg-white shadow hover:shadow-md transition">
+                            {item}
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+
+        <!-- Imagen -->
+        <div class="relative reveal">
+            <div
+                class="rounded-2xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition duration-500"
+            >
+                <img
+                    src={`${import.meta.env.BASE_URL}images/sobre-mi-modern.webp`}
+                    alt="Sobre mí"
+                    class="w-full h-auto object-cover"
+                    loading="lazy"
+                />
+            </div>
+            <div
+                class="absolute -z-10 top-[-40px] right-[-40px] w-64 h-64 bg-[var(--primary-100)] rounded-full blur-3xl opacity-40 animate-pulse"
+            >
+            </div>
+        </div>
+    </div>
+</section>
+
+<script is:raw>
+    (() => {
+        const obs = new IntersectionObserver(
+            (es) =>
+                es.forEach(
+                    (e) => e.isIntersecting && e.target.classList.add("in"),
+                ),
+            { threshold: 0.12 },
+        );
+        document
+            .querySelectorAll("#sobremi .reveal")
+            .forEach((el) => obs.observe(el));
+    })();
+</script>

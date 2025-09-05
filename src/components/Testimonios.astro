@@ -1,0 +1,153 @@
+---
+/**
+ * Testimonios – Slider horizontal con scroll-snap
+ * - Paleta: variables CSS definidas en tu global.css
+ * - Sin fotos: avatares SVG inline
+ * - Controles accesibles (prev/next) + reveal on scroll
+ * - JS con nombres únicos para evitar colisiones
+ */
+
+type T = {
+  quote: string;
+  name: string;
+  badge: string;
+  icon: "leaf" | "chat" | "brain" | "lotus" | "compass" | "shield";
+};
+
+const items: T[] = [
+  {
+    quote:
+      "Encontré un espacio de escucha respetuoso y herramientas para ordenar lo que me pasaba.",
+    name: "María G.",
+    badge: "Acompañamiento",
+    icon: "leaf",
+  },
+  {
+    quote:
+      "Las sesiones online fueron prácticas y me ayudaron a sostener el proceso sin dejar de trabajar.",
+    name: "Lucas R.",
+    badge: "Modalidad online",
+    icon: "chat",
+  },
+  {
+    quote:
+      "Pude comprender mis emociones y bajar la ansiedad. Me voy con recursos concretos.",
+    name: "Carolina S.",
+    badge: "Ansiedad · Recursos",
+    icon: "brain",
+  },
+  {
+    quote:
+      "Acompañamiento muy humano durante un duelo difícil. Sentí calidez y claridad.",
+    name: "Daniel A.",
+    badge: "Proceso de duelo",
+    icon: "lotus",
+  },
+  {
+    quote:
+      "La orientación vocacional me dio foco y confianza para elegir mi carrera.",
+    name: "Paula T.",
+    badge: "Orientación",
+    icon: "compass",
+  },
+  {
+    quote:
+      "La supervisión clínica aportó mirada ética y orden conceptual para mis casos.",
+    name: "Lic. M. Pérez",
+    badge: "Supervisión",
+    icon: "shield",
+  },
+];
+
+// Avatares SVG (sin JSX dentro de {} para evitar parseos problemáticos)
+const ICONS: Record<T["icon"], string> = {
+  leaf: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M5 21q1.85-3.775 4.463-6.388T16 11q3.125-1.6 5-4q-.3 4.05-2.275 6.775T13 18q-2.825 1.2-5 3Z"/></svg>`,
+  chat: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M4 4h16v10H7l-3 3z"/><circle cx="9" cy="9" r="1.2" fill="var(--accent)"/><circle cx="12" cy="9" r="1.2" fill="var(--accent)"/><circle cx="15" cy="9" r="1.2" fill="var(--accent)"/></svg>`,
+  brain: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M8 3a3 3 0 0 0-3 3v.5A3 3 0 0 0 3 9a3 3 0 0 0 3 3v5a3 3 0 1 0 6 0V5a2 2 0 0 0-2-2z"/><path fill="currentColor" d="M16 5a3 3 0 0 0-3 3v9a3 3 0 1 0 6 0V8a3 3 0 0 0-3-3z"/></svg>`,
+  lotus: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M12 6c-2 2-3 4-3 6c0 2 1 3 3 4c2-1 3-2 3-4c0-2-1-4-3-6z"/><path fill="currentColor" d="M5 13c2-.5 4-.3 7 1c3-1.3 5-1.5 7-1c-1.5 3-6 5-7 5s-5.5-2-7-5z" opacity=".25"/></svg>`,
+  compass: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm3.8 6.2l-2.8 5.6l-5.6 2.8l2.8-5.6l5.6-2.8Z"/></svg>`,
+  shield: `<svg viewBox="0 0 24 24" class="h-8 w-8 text-[var(--primary-700)]"><path fill="currentColor" d="M12 3l8 3v6q0 5.2-8 9q-8-3.8-8-9V6l8-3Z"/></svg>`,
+};
+---
+
+<section id="testimonios" class="py-20">
+  <div class="max-w-6xl mx-auto px-4">
+    <header class="reveal">
+      <h2 class="section-title">Testimonios</h2>
+      <p class="mt-2 text-slate-600">Voces que acompañan el proceso terapéutico.</p>
+    </header>
+
+    <!-- Slider -->
+    <div class="mt-8 relative">
+      <!-- Controles -->
+      <button
+        id="tPrev"
+        class="absolute -left-2 top-1/2 -translate-y-1/2 z-10 hidden md:inline-flex items-center justify-center h-10 w-10 rounded-full bg-white ring-1 ring-[var(--muted)]/40 shadow hover:bg-[var(--surface)]"
+        aria-label="Anterior"
+        type="button">‹</button>
+
+      <div
+        id="tSlider"
+        class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-p-6 md:scroll-p-0 pb-2"
+      >
+        {
+          items.map((it) => (
+            <figure
+              class="reveal snap-start min-w-[86%] sm:min-w-[60%] md:min-w-[48%] lg:min-w-[32%] bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition"
+            >
+              <div class="p-5">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-xl bg-[var(--surface)] ring-1 ring-[var(--muted)]/30">
+                    <div set:html={ICONS[it.icon]} />
+                  </div>
+                  <figcaption class="flex-1">
+                    <div class="font-semibold text-[var(--primary-700)]">{it.name}</div>
+                    <div class="text-xs badge">{it.badge}</div>
+                  </figcaption>
+                </div>
+                <blockquote class="mt-4 text-[var(--ink)]/85 leading-relaxed">
+                  “{it.quote}”
+                </blockquote>
+              </div>
+
+              <!-- Franja de acento -->
+              <div class="h-1 w-full bg-gradient-to-r from-[var(--primary-400)] via-[var(--primary-600)] to-[var(--primary-700)]"></div>
+            </figure>
+          ))
+        }
+      </div>
+
+      <button
+        id="tNext"
+        class="absolute -right-2 top-1/2 -translate-y-1/2 z-10 hidden md:inline-flex items-center justify-center h-10 w-10 rounded-full bg-white ring-1 ring-[var(--muted)]/40 shadow hover:bg-[var(--surface)]"
+        aria-label="Siguiente"
+        type="button">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- JS: slider + reveal (nombres únicos para evitar colisiones) -->
+<script is:raw>
+  (function(){
+    const cont = document.getElementById('tSlider');
+    const prev = document.getElementById('tPrev');
+    const next = document.getElementById('tNext');
+    if (!cont) return;
+
+    // Scroll por tarjeta aproximada
+    const step = () => {
+      const card = cont.querySelector('figure');
+      return card ? (card.getBoundingClientRect().width + 20) : 320;
+    };
+
+    prev?.addEventListener('click', () => cont.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => cont.scrollBy({ left:  step(), behavior: 'smooth' }));
+
+    // Reveal on scroll (identificador único)
+    const ioTesti = new IntersectionObserver(
+      (entries) => entries.forEach(e => e.isIntersecting && e.target.classList.add('in')),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('#testimonios .reveal').forEach(el => ioTesti.observe(el));
+  })();
+</script>

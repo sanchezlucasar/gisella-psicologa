@@ -1,0 +1,20 @@
+---
+import "@/styles/global.css";
+const {
+  title = "Psicología Clínica",
+  description = "Atención psicológica online para jóvenes y adultos.",
+} = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[var(--surface)] text-[var(--ink)] antialiased">
+    <slot />
+  </body>
+</html>

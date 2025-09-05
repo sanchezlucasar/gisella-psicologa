@@ -1,0 +1,40 @@
+<nav class="sticky top-0 z-50 nav-glass">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href={`${import.meta.env.BASE_URL}`} class="flex items-center gap-3">
+            <img
+                src={`${import.meta.env.BASE_URL}images/logo-psicologia.webp`}
+                alt="Logo"
+                class="h-9 w-9 rounded-full object-cover border-2 border-[var(--primary-700)]"
+            />
+            <span class="font-semibold text-[var(--primary-700)]">
+                Psicología Clínica
+            </span>
+        </a>
+        <ul class="hidden md:flex gap-6 text-sm text-[var(--ink)]/80">
+            <li>
+                <a
+                    href={`${import.meta.env.BASE_URL}#sobremi`}
+                    class="link-underline">Sobre mí</a
+                >
+            </li>
+            <li>
+                <a
+                    href={`${import.meta.env.BASE_URL}#servicios`}
+                    class="link-underline">Servicios</a
+                >
+            </li>
+            <li>
+                <a
+                    href={`${import.meta.env.BASE_URL}#testimonios`}
+                    class="link-underline">Testimonios</a
+                >
+            </li>
+            <li>
+                <a
+                    href={`${import.meta.env.BASE_URL}#contacto`}
+                    class="link-underline">Contacto</a
+                >
+            </li>
+        </ul>
+    </div>
+</nav>
